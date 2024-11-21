@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('base')
 
 @section('content')
 <div class="container">
@@ -14,24 +14,24 @@
         </div>
     @endif
 
-    <form action="{{ route('images.update', $image->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('subido.update', $subido->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 
         <div class="mb-3">
-            <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" name="nombre" id="nombre" class="form-control" value="{{ $image->nombre }}" required>
+            <label for="originalName" class="form-label">Nombre</label>
+            <input type="text" name="originalName" id="originalName" class="form-control" value="{{ $subido->originalName }}" required>
         </div>
 
         <div class="mb-3">
-            <label for="image" class="form-label">Archivo de Imagen (Opcional)</label>
-            <input type="file" name="image" id="image" class="form-control" accept="image/*">
+            <label for="file" class="form-label">Archivo de Imagen (Opcional)</label>
+            <input type="file" name="file" id="file" class="form-control" accept="image/*">
             <p class="mt-2">Imagen actual:</p>
-            <img src="{{ asset($image->path) }}" alt="{{ $image->nombre }}" width="200">
+            <img src="{{ route('subido.image', $subido->id) }}" alt="{{ $subido->nombre }}" width="200">
         </div>
 
         <button type="submit" class="btn btn-success">Guardar Cambios</button>
-        <a href="{{ route('images.index') }}" class="btn btn-secondary">Cancelar</a>
+        <a href="{{ route('subido.index') }}" class="btn btn-secondary">Cancelar</a>
     </form>
 </div>
 @endsection

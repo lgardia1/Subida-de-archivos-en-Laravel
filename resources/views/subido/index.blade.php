@@ -12,6 +12,17 @@
         </div>
     @endif
 
+    <!-- Mostrar mensajes de error -->
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <table class="table table-striped">
         <thead>
             <tr>
@@ -28,7 +39,7 @@
                 <tr>
                     <td>{{ $subir->id }}</td>
                     <td>{{ $subir->originalName }}</td>
-                    <td><img src="{{ route('subido.image' , $subir->id) }}" alt="$subir->originalName" style="object-fit: cover; object-position: center; width: 5rem; height: 5rem;"></td>
+                    <td><img src="{{ route('subido.image' , $subir->id) }}" alt="{{ $subir->originalName }}" style="object-fit: cover; object-position: center; width: 5rem; height: 5rem;"></td>
                     <td>{{ $subir->created_at }}</td>
                     <td>{{ $subir->updated_at }}</td>
                     <td>

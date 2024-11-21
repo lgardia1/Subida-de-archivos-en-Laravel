@@ -17,10 +17,10 @@ class SubidoController extends Controller
     {
         $subidos = Subido::orderBy("id", "asc")->get();
 
-        if(!$subidos->isEmpty()) {
+        if (!$subidos->isEmpty()) {
             return view('subido.index', ['subidos' => $subidos]);
         }
-            
+
         return view('subido.create');
     }
 
@@ -55,6 +55,7 @@ class SubidoController extends Controller
 
         $path = $file->storeAs('images', $filename);
         $vadilateData['path'] = $path;
+        
 
         try {
             Subido::create($vadilateData);
@@ -70,9 +71,9 @@ class SubidoController extends Controller
     public function show(Subido $subido)
     {
         if (!$subido) {
-            abort(404); 
+            abort(404);
         }
-    
+
         return view('subido.show', ['subido' => $subido]);
     }
 
@@ -82,9 +83,9 @@ class SubidoController extends Controller
     public function edit(Subido $subido)
     {
         if (!$subido) {
-            abort(404); 
+            abort(404);
         }
-    
+
         return view('subido.edit', ['subido' => $subido]);
     }
 
@@ -94,12 +95,16 @@ class SubidoController extends Controller
     public function update(Request $request, Subido $subido)
     {
         $vadilateData = $request->validate([
-            'name' => 'required|string|max:50',
-            'path' => 'required|string|max:50'
+            'originalName' => 'required|string|min:1|max:50',
+            'file' => 'required|file|mimes:jpg,png,gif|max:2048',
         ]);
+
+        $file = $request->file('file');
+        $file->storeAs('/', $subido->path);
+
         try {
             $subido->update($request->all());
-            return back()->with(['message' => 'The image have been updated']);
+            return  redirect('/')->with(['message' => 'The image have been updated']);
         } catch (\Exception $e) {
             return back()->withInput()->withErrors(['message' => $e->getMessage()]);
         }
@@ -110,11 +115,20 @@ class SubidoController extends Controller
      */
     public function destroy(Subido $subido)
     {
+        
+        $filePath = storage_path('app/private') . '/' . $subido->path;
+
+        if (file_exists($filePath)) {
+            unlink($filePath); 
+        } else {
+            return redirect('/')->withErrors(['message' => 'El archivo no existe.']);
+        }
+
         try {
             $subido->delete();
-            return back()->with(['message' => 'The image is succesfully deleted']);
+            return redirect('/')->with(['message' => 'La imagen se eliminó con éxito.']);
         } catch (\Exception $e) {
-            return back()->withInput()->withErrors(['message' => $e->getMessage()]);
+            return back()->withInput()->withErrors(['message' => 'Error al eliminar el registro: ' . $e->getMessage()]);
         }
     }
 }
