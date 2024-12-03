@@ -95,12 +95,14 @@ class SubidoController extends Controller
     public function update(Request $request, Subido $subido)
     {
         $vadilateData = $request->validate([
-            'originalName' => 'required|string|min:1|max:50',
-            'file' => 'required|file|mimes:jpg,png,gif|max:2048',
+            'originalName' => 'string|min:1|max:50',
+            'file' => 'file|mimes:jpg,png,gif|max:2048',
         ]);
 
-        $file = $request->file('file');
-        $file->storeAs('/', $subido->path);
+        if($request->file('file')) {
+            $file = $request->file('file');
+            $file->storeAs('/', $subido->path);
+        }
 
         try {
             $subido->update($request->all());

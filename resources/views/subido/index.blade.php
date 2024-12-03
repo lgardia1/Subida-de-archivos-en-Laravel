@@ -43,7 +43,7 @@
                     <td>{{ $subir->created_at }}</td>
                     <td>{{ $subir->updated_at }}</td>
                     <td>
-                        <a href="{{ route('subido.show', $subir->id) }}" class="btn btn-info">View</a>
+                        <a href="{{ route('subido.show', $subir->id) }}" class="btn btn-sm btn-info">View</a>
 
                         <a href="{{ route('subido.edit', $subir->id) }}" class="btn btn-sm btn-warning">Editar</a>
 
