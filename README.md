@@ -19,7 +19,7 @@ Esta es una aplicación Laravel para subir y gestionar imágenes y archivos de f
 1. Clona el repositorio:
     ```sh
     git clone https://github.com/lgardia1/Subida-de-archivos-en-Laravel.git
-    cd subirImagen
+    cd Subida-de-archivos-en-Laravel
     ```
 
 2. Instala las dependencias de PHP:
