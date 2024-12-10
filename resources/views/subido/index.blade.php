@@ -39,7 +39,7 @@
                 <tr>
                     <td>{{ $subir->id }}</td>
                     <td>{{ $subir->originalName }}</td>
-                    <td><img src="{{ route('subido.image' , $subir->id) }}" alt="{{ $subir->originalName }}" style="object-fit: cover; object-position: center; width: 5rem; height: 5rem;"></td>
+                    <td><img  src="{{ route('subido.image' , $subir->id) }}" alt="{{ $subir->originalName }}" style="object-fit: cover; object-position: center; width: 5rem; height: 5rem;"></td>
                     <td>{{ $subir->created_at }}</td>
                     <td>{{ $subir->updated_at }}</td>
                     <td>
